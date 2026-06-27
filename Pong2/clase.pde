@@ -51,22 +51,13 @@ class paleta {
 
   void moverarriba() {
     pos.add(vel);
-
+    pos2.add(vel);
     vel.y = -3 ;
   }
   void moverabajo() {
     pos.add(vel);
-
+    pos2.add(vel);
     vel.y = 3 ;
   }
-  void moverabajo2() {
-    pos2.add(vel);
 
-    vel.y = 3 ;
-  }
-  void moverarriba2() {
-    pos2.add(vel);
-
-    vel.y = -3 ;
-  }
 }
