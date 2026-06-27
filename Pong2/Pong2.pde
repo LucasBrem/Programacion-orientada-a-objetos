@@ -19,10 +19,10 @@ void draw() {
       palet.moverabajo();
     }
     if (key == 'o' || key == 'O') {
-      palet2.moverarriba2();
+      palet2.moverarriba();
     }
     if (key == 'l' || key == 'L') {
-      palet2.moverabajo2();
+      palet2.moverabajo();
     }
   }
 
