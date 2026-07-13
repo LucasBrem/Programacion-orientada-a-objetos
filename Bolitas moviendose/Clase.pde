@@ -1,0 +1,62 @@
+class movil {
+  PVector pos, vel, Xy;
+  int r = 400;
+
+
+  movil(float x, float y) {
+    pos = new PVector(x, y);
+    vel = new PVector(1, 1);
+    
+  }
+ 
+
+
+  void contener() {
+    if ( pos.x < 0 || pos.x > width ) {
+      pos.sub(vel);
+      vel.x = vel.x * -1 ;
+    }
+
+    if ( pos.y < 0 || pos.y > height) {
+      pos.sub(vel);
+      vel.y = vel.y * -1;
+    }
+  }
+
+  void estar() {
+    fill(255);
+    noStroke();
+    circle(pos.x, pos.y, 30);
+  }
+
+  void mover() {
+    pos.add(vel);
+    contener();
+  }
+
+  
+
+
+  boolean choca() {
+    float d = dist(pos.x, pos.y, r, r);
+    if (d>r) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  void choco() {
+    if (choca()) {
+      
+      line(pos.x, pos.y, r, r);
+    } else {
+      fill(0);
+    }
+  }
+}
+void centro() {
+  int R = 400;
+    noFill();
+    noStroke();
+    circle(width/2, height/2, R);
+  }
