@@ -1,0 +1,17 @@
+movil  c1;
+movil c;
+
+void setup() {
+  size(800, 800);
+
+ c1 = new movil(10,10);
+}
+
+
+void draw() {
+  background(0);
+  
+  centro();
+  c1.mover();
+  c1.estar();
+}
