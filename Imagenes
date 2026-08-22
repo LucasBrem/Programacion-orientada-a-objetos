@@ -1,0 +1,10 @@
+PImage img ;
+
+void setup(){
+size(800,600); 
+img = loadImage("XD.png");
+}
+
+void draw(){
+image(img,mouseX,mouseY);
+}
