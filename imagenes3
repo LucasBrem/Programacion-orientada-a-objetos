@@ -1,0 +1,19 @@
+PImage img ;
+color c;
+
+void setup() {
+  size(800, 600);
+  img = loadImage("XD.png");
+}
+
+void draw() {
+  int X = int(random(width));
+  int Y = int(random(height));
+  int T = int(map(mouseY,0,height,0,255));
+  int D = int(map(mouseX,0,width,0,30));
+  c = img.get(X,Y);
+  
+  
+  fill(c,T);
+  ellipse(X,Y,D,D);
+}
