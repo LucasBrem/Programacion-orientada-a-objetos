@@ -1,0 +1,14 @@
+PImage img ;
+color c;
+
+void setup() {
+  size(800, 600);
+  img = loadImage("XD.png");
+}
+
+void draw() {
+  image(img, 0, 0);
+  c = img.get(mouseX,mouseY);
+  fill(c);
+  rect(mouseX-15,mouseY-15,30,30);
+}
