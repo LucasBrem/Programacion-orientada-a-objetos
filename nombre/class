@@ -1,0 +1,29 @@
+  float r = 10;
+  color C = color(255);
+
+  Pelota(int X, int Y) {
+    int y, x;
+    X = x;
+    Y = y;
+    pos = new PVector(x, y);
+    vel = new PVector(1, 1);
+  }
+  void mover() {
+    pos.add(vel);
+    rebotar();
+   
+  }
+  void mostrar() {
+    fill(C);
+    circle(pos.x, pos.y, r);
+  }
+  void rebotar() {
+    if (pos.y>height-r || pos.y<r) {
+      vel.y = vel.y*-1;
+    }
+  }
+  
+  }
+  class cuadrado {
+  
+  }
