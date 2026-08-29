@@ -1,1 +1,24 @@
 
+ArrayList <cuadrado>tubos;
+Pelota  bird;
+float ultimopar = 0 ;
+PVector G = new PVector(0, 2);
+
+void setup() {
+  size(800, 600);
+  tubos = new ArrayList <cuadrado>();
+  bird  = new Pelota(100, height/2);
+}
+
+void draw() {
+  background(0);
+  agregartubos();
+  bird.addfuerza(G);
+  bird.mover();
+  borrartubos();
+  for (cuadrado t : tubos) {
+    t.mover();
+    t.mostrar();
+  }
+  bird.mostrar();
+}
