@@ -1,29 +1,44 @@
-  float r = 10;
-  color C = color(255);
+class Cuadrado {
+  PVector pos;
+  float ancho, alto;
+  float velocidad = 3;
 
-  Pelota(int X, int Y) {
-    int y, x;
-    X = x;
-    Y = y;
+  Cuadrado(float x, float y, float w, float h) {
     pos = new PVector(x, y);
-    vel = new PVector(1, 1);
+    ancho = w;
+    alto = h;
   }
+
   void mover() {
-    pos.add(vel);
-    rebotar();
-   
+    pos.x -= velocidad;
   }
+
   void mostrar() {
-    fill(C);
-    circle(pos.x, pos.y, r);
+    fill(0, 200, 100);
+    stroke(255);
+    rect(pos.x, pos.y, ancho, alto);
   }
-  void rebotar() {
-    if (pos.y>height-r || pos.y<r) {
-      vel.y = vel.y*-1;
+
+  boolean chocaCon(PVector otraPos, float diametro) {
+    float r = diametro / 2.0;
+    PVector pmc = new PVector();
+
+    if (otraPos.x < pos.x) {
+      pmc.x = pos.x;
+    } else if (otraPos.x > pos.x + ancho) {
+      pmc.x = pos.x + ancho;
+    } else {
+      pmc.x = otraPos.x;
     }
+
+    if (otraPos.y < pos.y) {
+      pmc.y = pos.y;
+    } else if (otraPos.y > pos.y + alto) {
+      pmc.y = pos.y + alto;
+    } else {
+      pmc.y = otraPos.y;
+    }
+
+    return pmc.dist(otraPos) < r;
   }
-  
-  }
-  class cuadrado {
-  
-  }
+}
