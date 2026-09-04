@@ -1,24 +1,68 @@
-
-ArrayList <cuadrado>tubos;
-Pelota  bird;
-float ultimopar = 0 ;
-PVector G = new PVector(0, 2);
+ArrayList<Cuadrado> tubos;
+Pelota bird;
+float ultimoPar = 0;
+PVector G = new PVector(0, 0.4);
+boolean hayColision = false;
 
 void setup() {
   size(800, 600);
-  tubos = new ArrayList <cuadrado>();
-  bird  = new Pelota(100, height/2);
+  tubos = new ArrayList<Cuadrado>();
+  bird = new Pelota(100, height / 2); 
 }
 
 void draw() {
-  background(0);
-  agregartubos();
-  bird.addfuerza(G);
+  if (hayColision) {
+    background(230, 80, 80);
+  } else {
+    background(150);
+  }
+  
+  Agregartubos();
+  bird.addFuerza(G);
   bird.mover();
   borrartubos();
-  for (cuadrado t : tubos) {
+  
+  hayColision = false;
+
+  for (Cuadrado t : tubos) {
     t.mover();
     t.mostrar();
+    
+    if (t.chocaCon(bird.pos, bird.t)) {
+      hayColision = true;
+    }
   }
+  
   bird.mostrar();
+}
+
+void keyPressed() {
+  if (key == ' ') {
+    bird.saltar();
+  }
+}
+
+void borrartubos() {
+  for (int i = tubos.size() - 1; i >= 0; i--) {
+    Cuadrado Aux = tubos.get(i);
+    if (Aux.pos.x + Aux.ancho < 0) {
+      tubos.remove(i);
+    }
+  }
+}
+
+void Agregartubos() {
+  float tActual = millis();
+  float dt = tActual - ultimoPar;
+  
+  if (dt > 2500) { 
+    float gap = 140;
+    float altoTop = random(50, height - gap - 50);
+    float altoBottom = height - altoTop - gap;
+    
+    tubos.add(new Cuadrado(width, 0, 60, altoTop));
+    tubos.add(new Cuadrado(width, height - altoBottom, 60, altoBottom));
+    
+    ultimoPar = tActual;
+  }
 }
