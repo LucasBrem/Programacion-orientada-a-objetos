@@ -1,0 +1,30 @@
+class Dupla {
+  Cuadrado arriba;
+  Cuadrado abajo;
+
+  Dupla(float x, float gap) {
+    float altoTop = random(50, height - gap - 50);
+    float altoBottom = height - altoTop - gap;
+
+    arriba = new Cuadrado(x, 0, 60, altoTop);
+    abajo = new Cuadrado(x, height - altoBottom, 60, altoBottom);
+  }
+
+  void mover() {
+    arriba.mover();
+    abajo.mover();
+  }
+
+  void mostrar() {
+    arriba.mostrar();
+    abajo.mostrar();
+  }
+
+  boolean estaFuera() {
+    return arriba.pos.x + arriba.ancho < 0;
+  }
+
+  boolean chocaCon(PVector posBird, float tamBird) {
+    return arriba.chocaCon(posBird, tamBird) || abajo.chocaCon(posBird, tamBird);
+  }
+}
