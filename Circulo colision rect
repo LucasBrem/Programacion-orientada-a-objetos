@@ -1,0 +1,68 @@
+
+float rectX, rectY;
+float rectAncho = 160;
+float rectAlto = 100;
+
+
+float circuloX, circuloY;
+float radio = 30;
+
+void setup() {
+  size(800, 600);
+  
+
+  rectX = width / 2;
+  rectY = height / 2;
+}
+
+void draw() {
+ 
+  circuloX = mouseX;
+  circuloY = mouseY;
+  
+  
+  boolean hayColision = verificarColision(circuloX, circuloY, radio, rectX, rectY, rectAncho, rectAlto);
+  
+ 
+  if (hayColision) {
+    background(230, 80, 80);  // Fondo rojo/alerta al colisionar
+    fill(255, 200, 0);        // Rectángulo amarillo
+  } else {
+    background(30);           // Fondo oscuro estándar
+    fill(100, 150, 255);      // Rectángulo azul
+  }
+  
+ 
+ rectMode(CENTER);
+  
+  rect(rectX, rectY, rectAncho, rectAlto);
+  
+  
+  fill(255);
+  ellipse(circuloX, circuloY, radio * 2, radio * 2);
+}
+
+
+boolean verificarColision(float cx, float cy, float r, float rx, float ry, float rw, float rh) {
+ 
+  float minX = rx - rw / 2;
+  float maxX = rx + rw / 2;
+  float minY = ry - rh / 2;
+  float maxY = ry + rh / 2;
+  
+ 
+  float pmcX = cx;
+  if (cx < minX) pmcX = minX;
+  else if (cx > maxX) pmcX = maxX;
+  
+  
+  float pmcY = cy;
+  if (cy < minY) pmcY = minY;
+  else if (cy > maxY) pmcY = maxY;
+  
+  
+  float distancia = dist(cx, cy, pmcX, pmcY);
+  
+ 
+  return distancia < r;
+}
