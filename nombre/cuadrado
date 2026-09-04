@@ -1,0 +1,44 @@
+class Cuadrado {
+  PVector pos;
+  float ancho, alto;
+  float velocidad = 3;
+
+  Cuadrado(float x, float y, float w, float h) {
+    pos = new PVector(x, y);
+    ancho = w;
+    alto = h;
+  }
+
+  void mover() {
+    pos.x -= velocidad;
+  }
+
+  void mostrar() {
+    fill(0, 200, 100);
+    stroke(255);
+    rect(pos.x, pos.y, ancho, alto);
+  }
+
+  boolean chocaCon(PVector otraPos, float diametro) {
+    float r = diametro / 2.0;
+    PVector pmc = new PVector();
+
+    if (otraPos.x < pos.x) {
+      pmc.x = pos.x;
+    } else if (otraPos.x > pos.x + ancho) {
+      pmc.x = pos.x + ancho;
+    } else {
+      pmc.x = otraPos.x;
+    }
+
+    if (otraPos.y < pos.y) {
+      pmc.y = pos.y;
+    } else if (otraPos.y > pos.y + alto) {
+      pmc.y = pos.y + alto;
+    } else {
+      pmc.y = otraPos.y;
+    }
+
+    return pmc.dist(otraPos) < r;
+  }
+}
