@@ -1,0 +1,30 @@
+class DuplaDeTubos {
+  Cuadrado arriba;
+  Cuadrado abajo;
+
+  DuplaDeTubos(float x, float gap, float anchoTubo) {
+    float altoTop = random(50, height - gap - 50);
+    float altoBottom = height - altoTop - gap;
+
+    arriba = new Cuadrado(x, 0, anchoTubo, altoTop, -3, 0);
+    abajo = new Cuadrado(x, height - altoBottom, anchoTubo, altoBottom, -3, 0);
+  }
+
+  void mover() {
+    arriba.mover();
+    abajo.mover();
+  }
+
+  void mostrar() {
+    arriba.mostrar(0, 200, 100, CORNER);
+    abajo.mostrar(0, 200, 100, CORNER);
+  }
+
+  boolean estaFuera() {
+    return arriba.pos.x + arriba.ancho < 0;
+  }
+
+  boolean colisionaCon(Circulo c) {
+    return arriba.chocaConCirculo(c, CORNER) || abajo.chocaConCirculo(c, CORNER);
+  }
+}
