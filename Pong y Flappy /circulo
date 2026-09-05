@@ -1,0 +1,48 @@
+class Circulo {
+  PVector pos, vel, acc;
+  float radio;
+
+  Circulo(float x, float y, float r) {
+    pos = new PVector(x, y);
+    vel = new PVector(0, 0);
+    acc = new PVector(0, 0);
+    radio = r;
+  }
+
+  Circulo(float x, float y, float r, float vx, float vy) {
+    pos = new PVector(x, y);
+    vel = new PVector(vx, vy);
+    acc = new PVector(0, 0);
+    radio = r;
+  }
+
+  void addFuerza(PVector f) {
+    acc.add(f);
+  }
+
+  void saltar(float fuerza) {
+    vel.y = fuerza;
+  }
+
+  void mover() {
+    vel.add(acc);
+    pos.add(vel);
+    acc.mult(0);
+  }
+
+  void contenerPantalla() {
+    if (pos.y - radio < 0 || pos.y + radio > height) {
+      vel.y *= -1;
+    }
+  }
+
+  void rebotarX() {
+    vel.x *= -1;
+  }
+
+  void mostrar(int r, int g, int b) {
+    fill(r, g, b);
+    noStroke();
+    ellipse(pos.x, pos.y, radio * 2, radio * 2);
+  }
+}
