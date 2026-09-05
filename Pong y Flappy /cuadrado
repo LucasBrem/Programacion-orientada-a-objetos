@@ -1,0 +1,62 @@
+class Cuadrado {
+  PVector pos, vel;
+  float ancho, alto;
+
+  Cuadrado(float x, float y, float w, float h) {
+    pos = new PVector(x, y);
+    vel = new PVector(0, 0);
+    ancho = w;
+    alto = h;
+  }
+
+  Cuadrado(float x, float y, float w, float h, float vx, float vy) {
+    pos = new PVector(x, y);
+    vel = new PVector(vx, vy);
+    ancho = w;
+    alto = h;
+  }
+
+  void mover() {
+    pos.add(vel);
+  }
+
+  void moverConLimites(boolean up, boolean down, float v) {
+    if (up) pos.y -= v;
+    if (down) pos.y += v;
+    pos.y = constrain(pos.y, alto / 2, height - alto / 2);
+  }
+
+  void mostrar(int r, int g, int b, int modo) {
+    fill(r, g, b);
+    stroke(255);
+    rectMode(modo);
+    rect(pos.x, pos.y, ancho, alto);
+  }
+
+  boolean chocaConCirculo(Circulo c, int modoRect) {
+    PVector pmc = new PVector();
+    float minX, maxX, minY, maxY;
+
+    if (modoRect == CENTER) {
+      minX = pos.x - ancho / 2;
+      maxX = pos.x + ancho / 2;
+      minY = pos.y - alto / 2;
+      maxY = pos.y + alto / 2;
+    } else {
+      minX = pos.x;
+      maxX = pos.x + ancho;
+      minY = pos.y;
+      maxY = pos.y + alto;
+    }
+
+    if (c.pos.x < minX) pmc.x = minX;
+    else if (c.pos.x > maxX) pmc.x = maxX;
+    else pmc.x = c.pos.x;
+
+    if (c.pos.y < minY) pmc.y = minY;
+    else if (c.pos.y > maxY) pmc.y = maxY;
+    else pmc.y = c.pos.y;
+
+    return pmc.dist(c.pos) < c.radio;
+  }
+}
