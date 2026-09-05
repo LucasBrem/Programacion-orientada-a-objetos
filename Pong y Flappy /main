@@ -1,0 +1,114 @@
+int estado = 0; // 0: Menú, 1: Pong, 2: Flappy, 3: Game Over
+
+// Variables Pong
+Circulo pelotaPong;
+Cuadrado paleta1, paleta2;
+int ptosP1 = 0, ptosP2 = 0;
+
+// Variables Flappy
+Circulo bird;
+ArrayList<DuplaDeTubos> tubos;
+float tiempoTubo = 0;
+PVector G = new PVector(0, 0.4);
+
+void setup() {
+  size(800, 600);
+}
+
+void draw() {
+  switch (estado) {
+    case 0: // MENÚ
+      background(30);
+      fill(255);
+      textSize(40);
+      textAlign(CENTER, CENTER);
+      text("SELECCIONA UN JUEGO", width / 2, 150);
+      textSize(25);
+      text("Presiona 1 para PONG", width / 2, 280);
+      text("Presiona 2 para FLAPPY BIRD", width / 2, 350);
+      break;
+
+    case 1: // PONG
+      background(0);
+      pelotaPong.mover();
+      pelotaPong.contenerPantalla();
+
+      paleta1.moverConLimites(is_w, is_s, 7);
+      paleta2.moverConLimites(is_o, is_l, 7);
+
+      if (paleta1.chocaConCirculo(pelotaPong, CENTER)) {
+        pelotaPong.rebotarX();
+        pelotaPong.pos.x = paleta1.pos.x + paleta1.ancho / 2 + pelotaPong.radio;
+      }
+      if (paleta2.chocaConCirculo(pelotaPong, CENTER)) {
+        pelotaPong.rebotarX();
+        pelotaPong.pos.x = paleta2.pos.x - paleta2.ancho / 2 - pelotaPong.radio;
+      }
+
+      if (pelotaPong.pos.x < 0) {
+        ptosP2++;
+        pelotaPong = new Circulo(width / 2, height / 2, 10, 4, 4);
+      }
+      if (pelotaPong.pos.x > width) {
+        ptosP1++;
+        pelotaPong = new Circulo(width / 2, height / 2, 10, -4, -4);
+      }
+
+      if (ptosP1 >= 5 || ptosP2 >= 5) {
+        estado = 3;
+      }
+
+      fill(255, 50);
+      textSize(100);
+      textAlign(CENTER, CENTER);
+      text(ptosP1, width / 4, height / 2);
+      text(ptosP2, 3 * width / 4, height / 2);
+
+      pelotaPong.mostrar(255, 255, 0);
+      paleta1.mostrar(255, 255, 255, CENTER);
+      paleta2.mostrar(255, 255, 255, CENTER);
+      break;
+
+    case 2: // FLAPPY
+      background(150);
+
+      if (millis() - tiempoTubo > 2200) {
+        tubos.add(new DuplaDeTubos(width, 140, 60));
+        tiempoTubo = millis();
+      }
+
+      bird.addFuerza(G);
+      bird.mover();
+
+      if (bird.pos.y - bird.radio <= 0 || bird.pos.y + bird.radio >= height) {
+        estado = 3;
+      }
+
+      for (int i = tubos.size() - 1; i >= 0; i--) {
+        DuplaDeTubos d = tubos.get(i);
+        d.mover();
+        d.mostrar();
+
+        if (d.colisionaCon(bird)) {
+          estado = 3;
+        }
+
+        if (d.estaFuera()) {
+          tubos.remove(i);
+        }
+      }
+
+      bird.mostrar(255, 255, 0);
+      break;
+
+    case 3: // GAME OVER
+      background(200, 50, 50);
+      fill(255);
+      textSize(50);
+      textAlign(CENTER, CENTER);
+      text("GAME OVER", width / 2, height / 2 - 40);
+      textSize(20);
+      text("Presiona ESPACIO para ir al menu", width / 2, height / 2 + 40);
+      break;
+  }
+}
