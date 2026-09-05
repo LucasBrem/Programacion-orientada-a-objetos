@@ -1,11 +1,10 @@
-int estado = 0; // 0: Menú, 1: Pong, 2: Flappy, 3: Game Over
+int estado = 0; 
 
-// Variables Pong
 Circulo pelotaPong;
 Cuadrado paleta1, paleta2;
 int ptosP1 = 0, ptosP2 = 0;
 
-// Variables Flappy
+
 Circulo bird;
 ArrayList<DuplaDeTubos> tubos;
 float tiempoTubo = 0;
@@ -17,7 +16,7 @@ void setup() {
 
 void draw() {
   switch (estado) {
-    case 0: // MENÚ
+    
       background(30);
       fill(255);
       textSize(40);
@@ -28,7 +27,7 @@ void draw() {
       text("Presiona 2 para FLAPPY BIRD", width / 2, 350);
       break;
 
-    case 1: // PONG
+    case 1: 
       background(0);
       pelotaPong.mover();
       pelotaPong.contenerPantalla();
@@ -69,7 +68,7 @@ void draw() {
       paleta2.mostrar(255, 255, 255, CENTER);
       break;
 
-    case 2: // FLAPPY
+    case 2: 
       background(150);
 
       if (millis() - tiempoTubo > 2200) {
@@ -101,7 +100,7 @@ void draw() {
       bird.mostrar(255, 255, 0);
       break;
 
-    case 3: // GAME OVER
+
       background(200, 50, 50);
       fill(255);
       textSize(50);
